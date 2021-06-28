@@ -2,7 +2,10 @@ package com.example.integrationTestDemo
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
+import org.springframework.context.annotation.Configuration
 
 @ConfigurationProperties(prefix = "book-service")
-@ConstructorBinding
-data class BookConfig(val baseUrl: String)
+@Configuration
+class BookConfig {
+    lateinit var baseUrl: String
+}
