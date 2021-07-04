@@ -1,10 +1,22 @@
+[
 {
-    "request" : {
-      "urlPath" : "/v4/909baf7d-0843-4ffb-83b8-f83a24e72310",
-      "method" : "GET"
+  "request": {
+    "urlPath": "/v4/909baf7d-0843-4ffb-83b8-f83a24e72310",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "body": "[ { \"author\": \"J.K.Rowling\", \"title\": \"Harry Potter\" } ]"
+  }
+},
+  {
+    "request": {
+      "urlPath": "/v4/909baf7d-0843-4ffb-83b8-f83a24e72310",
+      "method": "GET"
     },
-    "response" : {
-      "status" : 200,
-      "body" : "[ { \"author\": \"J.K.Rowling\", \"title\": \"Harry Potter\" } ]"
+    "response": {
+      "status": 200,
+      "body": "[ { \"author\": \"J.K.Rowling\", \"title\": \"Harry Potter\" } ]"
     }
-}
+  }
+]
