@@ -9,7 +9,6 @@ import java.util.*
 class BookClient(bookConfig: BookConfig) {
 
     private val retrofit: Retrofit by lazy {
-        println("<==========\nbaseUrl: ${bookConfig.baseUrl}\n=============>")
         Retrofit.Builder()
                 .baseUrl(bookConfig.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -20,5 +19,14 @@ class BookClient(bookConfig: BookConfig) {
         retrofit.create(BookService::class.java)
     }
 
-    fun getBooks(): List<Book> = Optional.ofNullable(bookService.getBooks().execute().body()).orElse(emptyList())
+    fun getBooks(): List<Book> {
+        val response = bookService.getBooks().execute()
+        return when (response.code()) {
+            200 -> Optional.ofNullable(response.body()).orElse(emptyList())
+            404 -> {
+                println("status: 404"); emptyList()
+            }
+            else -> emptyList()
+        }
+    }
 }

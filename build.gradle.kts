@@ -27,6 +27,7 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-gson:2.0.0")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("com.github.tomakehurst:wiremock:1.58")
 }
 
