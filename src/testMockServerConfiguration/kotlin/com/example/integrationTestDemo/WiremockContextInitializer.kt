@@ -15,28 +15,32 @@ class WireMockContextInitializer : ApplicationContextInitializer<ConfigurableApp
 
     override fun initialize(applicationContext: ConfigurableApplicationContext) {
 
-        val wmServer = WireMockServer(WireMockConfiguration().dynamicPort())
-        wmServer.start()
+        val wireMockServer = WireMockServer(WireMockConfiguration().dynamicPort())
+        wireMockServer.start()
 
+        addStubs(wireMockServer)
+
+        applicationContext.beanFactory.registerSingleton("wireMock", wireMockServer)
+
+        applicationContext.addApplicationListener {
+            if (it is ContextClosedEvent) {
+                wireMockServer.stop()
+            }
+        }
+
+        TestPropertyValues
+                .of("book-service.baseUrl=http://localhost:${wireMockServer.port()}/")
+                .applyTo(applicationContext)
+    }
+
+    private fun addStubs(wireMockServer: WireMockServer) {
         val mappingJson = String(Files.readAllBytes(Paths.get("src/main/resources/mock.json")));
         val jsonArray = JSONArray(mappingJson)
         var i = 0
         while (i < jsonArray.length()) {
             val stubMapping = StubMapping.buildFrom(jsonArray[i].toString())
-            wmServer.addStubMapping(stubMapping)
+            wireMockServer.addStubMapping(stubMapping)
             i++
         }
-
-        applicationContext.beanFactory.registerSingleton("wireMock", wmServer)
-
-        applicationContext.addApplicationListener {
-            if (it is ContextClosedEvent) {
-                wmServer.stop()
-            }
-        }
-
-        TestPropertyValues
-                .of("book-service.baseUrl=http://localhost:${wmServer.port()}/")
-                .applyTo(applicationContext)
     }
 }

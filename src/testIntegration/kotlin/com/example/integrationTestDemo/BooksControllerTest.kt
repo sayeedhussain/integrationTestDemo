@@ -25,7 +25,7 @@ class BooksControllerTest(@LocalServerPort val port: Int) {
     private lateinit var wireMock: WireMockServer
 
     @Test
-    fun `Should return 200`() {
+    fun `should return 200`() {
 
         val json = "[ { \"author\": \"Walt Whitman\", \"title\": \"Leaves of Grass\" } ]"
 
@@ -41,7 +41,7 @@ class BooksControllerTest(@LocalServerPort val port: Int) {
     }
 
     @Test
-    fun `Should return 500 when books api returns 401`() {
+    fun `should return 500 when books api returns 401`() {
 
         val json = "[ { \"author\": \"Walt Whitman\", \"title\": \"Leaves of Grass\" } ]"
 
