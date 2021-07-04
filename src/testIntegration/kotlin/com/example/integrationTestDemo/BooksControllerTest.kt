@@ -16,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @ContextConfiguration(initializers = [WireMockContextInitializer::class])
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class AnotherBooksControllerTest(@LocalServerPort val port: Int) {
+class BooksControllerTest(@LocalServerPort val port: Int) {
 
     @Autowired
     private lateinit var webTestClient: WebTestClient
