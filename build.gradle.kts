@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
 	id("org.springframework.boot") version "2.4.8"
@@ -29,6 +28,44 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("com.github.tomakehurst:wiremock:1.58")
+}
+
+sourceSets {
+	create("testIntegration") {
+		withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+			kotlin.srcDir("src/testIntegration/kotlin")
+			resources.srcDir("src/testIntegration/resources")
+			compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+			runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
+		}
+	}
+}
+
+task<Test>("testIntegration") {
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["testIntegration"].output.classesDirs
+	classpath = sourceSets["testIntegration"].runtimeClasspath
+	useJUnitPlatform()
+}
+
+sourceSets {
+	create("testMockServerConfiguration") {
+		withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+			kotlin.srcDir("src/testMockServerConfiguration/kotlin")
+			resources.srcDir("src/testMockServerConfiguration/resources")
+			compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+			runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
+		}
+	}
+}
+
+task<Test>("testMockServerConfiguration") {
+	description = "Runs the mock server configuration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["testMockServerConfiguration"].output.classesDirs
+	classpath = sourceSets["testMockServerConfiguration"].runtimeClasspath
+	useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
