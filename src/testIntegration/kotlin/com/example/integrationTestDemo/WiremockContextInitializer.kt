@@ -38,7 +38,7 @@ class WireMockContextInitializer : ApplicationContextInitializer<ConfigurableApp
             println("WireMock request headers: ${request?.headers}")
             println("WireMock response statusCode: ${response?.status}")
             println("WireMock response headers: ${response?.headers}")
-            val responseBody = if (response?.body != null) response?.bodyAsString else "null"
+            val responseBody = if (response?.body != null) response.bodyAsString else "null"
             println("WireMock response body: $responseBody")
         }
     }
