@@ -77,8 +77,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-	testLogging {
-		outputs.upToDateWhen {false}
-		showStandardStreams = true
-	}
 }
